@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="4.0.1"></a>
+## [4.0.1](https://github.com/zkat/cipm/compare/v4.0.0...v4.0.1) (2019-08-12)
+
+
+### Bug Fixes
+
+* respect and retain all configs passed in ([20b7372](https://github.com/zkat/cipm/commit/20b7372))
+
+
+
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/zkat/cipm/compare/v3.0.3...v4.0.0) (2019-07-10)
 
