@@ -10,6 +10,20 @@ const extract = requireInject('../../../lib/extract.js', {
   }
 })
 
+test('extract.child() ensures dirPacker is defined', t => {
+  const name = 'name'
+  const child = { version: '0.0.0', integrity: 'integrity', resolved: 'resolved' }
+  const childPath = './path'
+
+  const opts = { log: { level: 'level' }, dirPacker: {} }
+  const a = extract.child(name, child, childPath, opts)
+
+  a.then(b => {
+    t.ok('dirPacker' in b[2], 'dirPacker is defined')
+    t.end()
+  })
+})
+
 test('extract.child() only overwrites dirPacker when opts.dirPacker is defined', t => {
   const name = 'name'
   const child = { version: '0.0.0', integrity: 'integrity', resolved: 'resolved' }
