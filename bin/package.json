@@ -23,7 +23,7 @@
     "email": "kzm@sykosomatic.org",
     "twitter": "maybekatz"
   },
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "libcipm": "^2.0.0",
     "npmlog": "^4.1.2",

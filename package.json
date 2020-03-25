@@ -26,7 +26,7 @@
     "email": "kzm@sykosomatic.org",
     "twitter": "maybekatz"
   },
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "bin-links": "^1.1.2",
     "bluebird": "^3.5.1",
