@@ -176,6 +176,12 @@ test('deletes node_modules/ contents, without deleting node_modules/ itself', t 
           name: 'stale-dependency',
           version: '1.0.0'
         })
+      }),
+      '.cache': Dir({
+        'package.json': File({
+          name: '.cache',
+          version: '1.0.0'
+        })
       })
     }),
     'package.json': File({
@@ -200,7 +206,11 @@ test('deletes node_modules/ contents, without deleting node_modules/ itself', t 
   return run().then(() => {
     t.ok(
       !fs.existsSync(path.join(nodeModulesDir, 'stale-dependency')),
-      'node_modules/ contents were deleted'
+      'node_modules/ contents were deleted - normal folders'
+    )
+    t.ok(
+      !fs.existsSync(path.join(nodeModulesDir, '.cache')),
+      'node_modules/ contents were deleted - dot folders'
     )
     watcher.close()
     t.ok(notNodeModulesDeleted, 'node_modules/ itself was not deleted')
