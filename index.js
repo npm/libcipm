@@ -245,7 +245,7 @@ class Installer {
     )
     const includeProd = !/^dev(elopment)?$/.test(this.opts.only)
     const includeOptional = includeProd && this.opts.optional
-    return (dep.dev && includeDev) ||
+    return (dep.dev && includeDev && (!dep.optional || (dep.optional && includeOptional))) ||
       (dep.optional && includeOptional) ||
       (!dep.dev && !dep.optional && includeProd)
   }
