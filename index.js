@@ -323,6 +323,8 @@ class Installer {
     const depPath = dep.path(this.prefix)
     const depPkgPath = path.join(depPath, 'package.json')
     const parent = dep.requiredBy.values().next().value
+    if (!this.checkDepEnv(parent)) return BB.resolve(pkg)
+
     return readJson(parent.path(this.prefix), 'package.json')
       .then(ppkg =>
         (ppkg.dependencies && ppkg.dependencies[dep.name]) ||
