@@ -608,6 +608,53 @@ test('don\'t install optional dependencies with no-optional argument', t => {
   })
 })
 
+test('install dependencies which also required by devDependencies in git url', t => {
+  const fixture = new Tacks(Dir({
+    'package.json': File({
+      name: pkgName,
+      version: pkgVersion,
+      dependencies: { a: 'git+ssh://git@github.com/npm/a.git#1.0.0' },
+      devDependencies: { b: 'git+ssh://git@github.com/npm/b.git#1.0.0' }
+    }),
+    'package-lock.json': File({
+      lockfileVersion: 1,
+      dependencies: {
+        a: {
+          version: 'git+ssh://git@github.com/npm/a.git#1.0.0',
+          from: 'git+ssh://git@github.com/npm/a.git#1.0.0'
+        },
+        b: {
+          version: 'git+ssh://git@github.com/npm/b.git#1.0.0',
+          from: 'git+ssh://git@github.com/npm/b.git#1.0.0',
+          dev: true,
+          requires: {
+            a: 'git+ssh://git@github.com/npm/a.git#1.0.0'
+          }
+        }
+      }
+    })
+  }))
+  fixture.create(prefix)
+
+  extract = (name, child, childPath, opts) => {
+    const files = new Tacks(Dir({
+      'package.json': File({
+        name,
+        version: '1.0.0'
+      })
+    }))
+    files.create(childPath)
+  }
+
+  return run({ production: true }).then(details => {
+    t.equal(details.pkgCount, 1, 'only prod deps counted')
+    t.ok(fs.statSync(path.join(prefix, 'node_modules', 'a')), 'dep a is there')
+    t.throws(() => {
+      fs.statSync(path.join(prefix, 'node_modules', 'b'))
+    }, 'development dep b is not there')
+  })
+})
+
 test('runs lifecycle hooks of packages with env variables', t => {
   const originalConsoleLog = console.log
   console.log = () => {}

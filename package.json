@@ -10,6 +10,7 @@
   "scripts": {
     "prerelease": "npm t",
     "postrelease": "npm publish && git push --follow-tags",
+    "lint": "standard",
     "pretest": "standard",
     "release": "standard-version -s",
     "test": "tap -J --nyc-arg=--all --coverage test/specs"
